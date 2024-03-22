@@ -7,7 +7,7 @@
 
 const mongoose = require('mongoose');
 const urlSchema = new mongoose.Schema({
-    longUrl:{
+    longURL:{
         type:String,
         required:true
     },
@@ -16,11 +16,15 @@ const urlSchema = new mongoose.Schema({
         required:true,
         unique:true
     },
+    shortURL:{
+        type:String,
+        required:true
+    },
     clickCount:{
-        type:Number,
-        default:0
+        type:[{timestamps:{type:Number}}],
+        default:[]
     },
 },{timestamps:true}) 
 
-module.exports = mongoose.model('URL',urlSchema);
+module.exports = mongoose.model('url',urlSchema);
 
