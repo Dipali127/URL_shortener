@@ -11,6 +11,7 @@ const createShortURL = async function(req,res){
         const data = req.body;
         if(!data.longURL){
             return res.status(400).send({status:false,message:"OOPS! Invalid URL"});
+            
         }
         const shortCode = uniqid();
         //const shortCode = generateShortCode();
