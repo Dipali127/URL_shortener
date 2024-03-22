@@ -42,7 +42,7 @@ const redirectUrl = async function(req,res){
         const shortCode = req.params.shortCode;
         console.log(shortCode)
         const isValidshortUrl = await urlModel.findOne({shortCode:shortCode});
-        console.log(isValidshortUrl.longURL)
+    
         
         // if(!isValidshortUrl){
         //     return res.status(400).send({status:false,message:"OOPS! INVALID SHORTURL"});
