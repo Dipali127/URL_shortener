@@ -5,9 +5,6 @@ app.use(express.json())
 
 const routes = require('./router/routes');
 
-
-const routes = require('./router/routes');
-
 require('dotenv').config({path:'../.env'});
 const port = process.env.PORT;
 
