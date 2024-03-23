@@ -10,12 +10,12 @@ const createShortURL = async function(req,res){
     try{
         const data = req.body;
         if(!data.longURL){
-            return res.status(400).send({status:false,message:"OOPS! Invalid URL"});
+            return res.status(400).send({status:false,message:"Invalid URL format. Please provide a URL."});
             
         }
 
         if(!validator.isValidUrl(data.longURL)){
-            return res.status(400).send({status:false,message:"OOPS! Invalid URL"})
+            return res.status(400).send({status:false,message:"Invalid URL format. Please provide a valid URL"})
         }
 
         //provided longURL is already present in database
@@ -52,19 +52,17 @@ const redirectUrl = async function(req,res){
         const shortCode = req.params.shortCode;
         
         if(!validator.isValidShortCode(shortCode)){
-            return res.status(400).send({status:false, message:"OOPS! INVALID SHORTCODE"});
+            return res.status(400).send({status:false, message:"Invalid shortURL format. Please provide a valid shortURL"});
         }
-        console.log(shortCode)
+    
         const isValidshortUrl = await urlModel.findOne({shortCode:shortCode});
     
         
         if(!isValidshortUrl){
-            return res.status(400).send({status:false,message:"SHORTURL NOT PRESESNT IN DATABASE"});
+            return res.status(400).send({status:false,message:"INVALID SHORTURL,Please check the URL and try again"});
         }
 
-        return res.status(302).redirect(isValidshortUrl.longURL);
-
-        
+        return res.status(302).redirect(isValidshortUrl.longURL);   
 
     }catch(error){
         return res.status(500).send({status:false,message:error.message});
