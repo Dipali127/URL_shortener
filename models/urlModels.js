@@ -20,11 +20,7 @@ const urlSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    clickCount:{
-        type:[{timestamps:{type:Number}}],
-        default:[]
-    },
 },{timestamps:true}) 
 
-module.exports = mongoose.model('Url',urlSchema);
+module.exports = mongoose.model('url',urlSchema);
 
