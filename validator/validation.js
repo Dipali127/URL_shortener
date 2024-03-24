@@ -15,3 +15,5 @@ const isValidShortCode = (shortcode) => {
     // Test the shortcode against the regular expression
     return uniqidRegex.test(shortcode);
 };
+
+module.exports = {isValidUrl,isValidShortCode};
