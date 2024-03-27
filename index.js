@@ -6,7 +6,7 @@ app.use(express.json())
 const routes = require('./router/routes');
 
 require('dotenv').config({path:'../.env'});
-const port = process.env.PORT;
+const port = process.env.PORT || 3001;
 
 const mongoose = require('mongoose');
 mongoose.connect(process.env.clusterString).then(() => {console.log("mongoDB successfully connected")})
