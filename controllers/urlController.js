@@ -2,15 +2,13 @@ const urlModel = require('../models/urlModels');
 const uniqid = require('uniqid');
 const validator = require('../validator/validation');
 
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>generate shortURL of longURL>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
-
-
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>generate shortURL for longURL>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
 
 const createShortURL = async function (req, res) {
     try {
         const data = req.body;
         if (!data.longURL) {
-            return res.status(400).send({ status: false, message: "Invalid URL format. Please provide a URL." });
+            return res.status(400).send({ status: false, message: "Invalid URL. Please provide a URL." });
 
         }
 
@@ -18,16 +16,15 @@ const createShortURL = async function (req, res) {
             return res.status(400).send({ status: false, message: "Invalid URL format. Please provide a valid URL" })
         }
 
-        //provided longURL is already present in database
-        const ispresentLongURL = await urlModel.findOne({ longURL: data.longURL });
-        if (ispresentLongURL) {
-            return res.status(200).send({ status: true, message: "shortURL already exists", shortURl: ispresentLongURL.shortURL });
+        //Check if the provided longURL is already present in the database
+        const existingURL = await urlModel.findOne({ longURL: data.longURL });
+        if (existingURL) {
+            return res.status(200).send({ status: true, message: "shortURL already exists", shortURl: existingURL.shortURL });
         }
-        //generate unique shortCode of length 16
+        //Generate a unique shortCode of length 16
         const shortCode = uniqid();
 
-
-        //append baseURL with unique generated shortCode to get shortURL
+        //Append baseURL with the unique generated shortCode to generate shortURL
         const shortURL = `${process.env.BASE_URL}/${shortCode}`;
 
         const newURL = {
@@ -47,6 +44,7 @@ const createShortURL = async function (req, res) {
         return res.status(500).send({ status: false, message: error.message });
     }
 }
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Redirect user to longURL of provided shortURL>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
 
 const redirectUrl = async function (req, res) {
     try {
@@ -55,12 +53,15 @@ const redirectUrl = async function (req, res) {
         if (!validator.isValidShortCode(shortCode)) {
             return res.status(400).send({ status: false, message: "Invalid shortURL format. Please provide a valid shortURL" });
         }
+       
+        //Update urlClickcount by 1 on the provided shortUrl of longURL when user clicks on shortUrl
 
         const isValidshortUrl = await urlModel.findOneAndUpdate(
             { shortCode: shortCode },
             { $inc: { urlClickcount: 1 } });
 
-
+        
+        //If the user provides a wrong shortURL which is not present in the database   
         if (!isValidshortUrl) {
             return res.status(404).send({ status: false, message: "INVALID SHORTURL,Please check the URL and try again" });
         }
@@ -72,22 +73,23 @@ const redirectUrl = async function (req, res) {
     }
 }
 
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Get the number of hits on shortURL>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
 const clickTracker = async function (req, res) {
-    const shortCode = req.params.shortCodes;
+    const shortCode = req.params.shortCode;
 
     if (!validator.isValidShortCode(shortCode)) {
         return res.status(400).send({ status: false, message: "Invalid shortURL format. Please provide a valid shortURL" });
     }
-
+    
+    //If the user provides a wrong shortURL which is not present in the database
     const isAvailable = await urlModel.findOne({ shortCode: shortCode });
     if (!isAvailable) {
         return res.status(404).send({ status: false, message: "INVALID SHORTURL,Please check the URL and try again" });
     }
 
-    return res.status(200).send({
-        status: true,totalClicks: isAvailable.urlClickcount
-    })
+    return res.status(200).send({ status: true,totalClicks: isAvailable.urlClickcount})
 
 }
 
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Export controller functions>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
 module.exports = { createShortURL, redirectUrl,clickTracker};
