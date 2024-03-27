@@ -2,8 +2,8 @@ const urlModel = require('../models/urlModels');
 const uniqid = require('uniqid');
 const validator = require('../validator/validation');
 
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>generate shortURL for longURL>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
 
+// Generate shortURL for longURL//
 const createShortURL = async function (req, res) {
     try {
         const data = req.body;
@@ -44,8 +44,9 @@ const createShortURL = async function (req, res) {
         return res.status(500).send({ status: false, message: error.message });
     }
 }
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Redirect user to longURL of provided shortURL>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
 
+
+//Redirect user to longURL of provided shortURL//
 const redirectUrl = async function (req, res) {
     try {
         const shortCode = req.params.shortCode;
@@ -73,7 +74,8 @@ const redirectUrl = async function (req, res) {
     }
 }
 
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Get total number of hits on shortURL>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
+
+//Get total number of hits on shortURL//
 const clickTracker = async function (req, res) {
     const shortCode = req.params.shortCode;
 
@@ -91,5 +93,6 @@ const clickTracker = async function (req, res) {
 
 }
 
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Export controller functions>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
+
+//Export controller functions//
 module.exports = { createShortURL, redirectUrl,clickTracker};
