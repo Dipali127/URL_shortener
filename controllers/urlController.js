@@ -73,7 +73,7 @@ const redirectUrl = async function (req, res) {
     }
 }
 
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Get the number of hits on shortURL>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Get total number of hits on shortURL>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>//
 const clickTracker = async function (req, res) {
     const shortCode = req.params.shortCode;
 
