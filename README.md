@@ -40,7 +40,7 @@ The shortened URL is nearly one-fifth the size of the actual URL.
 
      Description: This endpoint generates a short URL from a provided longURL and adds shortURL,shortCode,urlClickcount along with longURL in the database.
 
-- **Redirecct to the shortURL associated with longURL** 
+- **Redirect to the shortURL associated with longURL** 
 
      Endpoint: `GET /:shortCode`
 
