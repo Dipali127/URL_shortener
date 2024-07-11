@@ -1,15 +1,16 @@
-const express = require('express');
+// routes.js
+import express from 'express';
 const router = express.Router();
 
-const urlController = require('../controllers/urlController');
+import { createShortURL, redirectUrl, clickTracker } from '../controllers/urlController.js';
 
 // Route to generate a short URL for a long URL
-router.post('/generateShorturl', urlController.createShortURL);
+router.post('/generateShorturl', createShortURL);
 
 // Route to redirect the user to the long URL associated with the provided short code
-router.get('/:shortCode', urlController.redirectUrl);
+router.get('/:shortCode', redirectUrl);
 
 // Route to get the total number of clicks on a short URL
-router.get('/clickCount/:shortCode', urlController.clickTracker);
+router.get('/clickCount/:shortCode', clickTracker);
 
-module.exports = router;
+export default router;

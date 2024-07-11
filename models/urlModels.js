@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const urlSchema = new mongoose.Schema({
     longURL:{
         type:String,
@@ -9,16 +9,12 @@ const urlSchema = new mongoose.Schema({
         required:true,
         unique:true
     },
-    shortURL:{
-        type:String,
-        required:true,
-        unique:true
-    },
     urlClickcount:{
         type:Number,
         default:0
     }
 },{timestamps:true}) 
 
-module.exports = mongoose.model('url',urlSchema);
+const url  = mongoose.model('Url',urlSchema);
+export default url;
 
