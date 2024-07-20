@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <title>Url Shortener</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>URL Shortener</h1>
+        <form id="shortenlongURL" action="/generateShorturl" method="POST">
+            <input type="text" id="longURL" name="longURL" , placeholder="Enter link here" required>
+            <button type="submit" id="button1">Shorten URL</button>
+        </form>
+
+        <% if (locals.shortURL) { %>
+            <div id="shortenedURLContainer">
+                <p id="short">Your Shortened URL</p>
+                <a href="<%= shortURL %>" target="_blank" id="shortenedURL">
+                    <%= shortURL %>
+                </a>
+            </div>
+
+            <form id="clickCountForm" action="/clickCount/<%= shortURL.split('/').pop() %>" method="GET">
+                <button id="button2">Total clicks of your short URL</button>
+            </form>
+            <% } %>
+
+    </div>
+
+</body>
+
+</html>

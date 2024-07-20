@@ -20,24 +20,19 @@ export async function createShortURL(req, res) {
         // Generate shortCode of size 8 by using base 62 characters(0-9,A-Z,a-z)
         const alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         const nanoid = customAlphabet(alphabet, 8)
-        const shortCode = nanoid() 
-
+        const shortCode = nanoid()
 
         // Append baseURL with the unique generated shortCode to generate shortURL
         const shortURL = `${process.env.BASE_URL}/${shortCode}`;
 
-        // Create a new instance of urlModel
         const newURL = new urlModel({
             longURL: longURL,
             shortCode: shortCode,
             urlClickcount: 0
         });
 
-        // Save the newURL instance to the database
         await newURL.save();
-
-        return res.status(201).send({ status: true, message: " A SHORTURL HAS BEEN CREATED ", shortUrl: shortURL });
-
+        return res.render("server", { shortURL })
     } catch (error) {
         return res.status(500).send({ status: false, message: error.message });
     }
@@ -45,7 +40,7 @@ export async function createShortURL(req, res) {
 
 
 // Redirect user to longURL of provided shortURL:
-export async function redirectUrl (req, res) {
+export async function redirectUrl(req, res) {
     try {
         const shortCode = req.params.shortCode;
 
@@ -70,13 +65,13 @@ export async function redirectUrl (req, res) {
             { new: true }).select('longURL urlClickcount')
 
         const redisData = {
-            longURL : isValidshortUrl.longURL,
-            urlClickcount : isValidshortUrl.urlClickcount
+            longURL: isValidshortUrl.longURL,
+            urlClickcount: isValidshortUrl.urlClickcount
         }
 
         await redisClient.set(shortCode, JSON.stringify(redisData));
 
-        console.log("redirect from mongodb")
+        console.log("cache miss")
         return res.status(301).redirect(isValidshortUrl.longURL)
 
     } catch (error) {
@@ -84,31 +79,40 @@ export async function redirectUrl (req, res) {
     }
 }
 
+// Combined click tracker API:
+export async function handleClick(req, res) {
+    try {
+        const shortCode = req.params.shortCode || req.body.shortURL?.split('/').pop();
 
-// Get total number of hits on shortURL:
-export async function clickTracker(req, res) {
-    const shortCode = req.params.shortCode;
+        if (!isValidShortCode(shortCode)) {
+            return res.status(400).send({ status: false, message: "Invalid shortURL format. Please provide a valid shortURL." });
+        }
 
-    if (!isValidShortCode(shortCode)) {
-        return res.status(400).send({ status: false, message: " Invalid shortURL format. Please provide a valid shortURL " });
+        // Fetch clickCount from Redis database
+        const isExistUrl = await redisClient.get(shortCode);
+        if (isExistUrl) {
+            let parseUrl = JSON.parse(isExistUrl);
+            return res.render("clicks", { shortCode: shortCode, totalClicks: parseUrl.urlClickcount });
+        }
+
+        // If not in Redis, fetch from MongoDB and update click count
+        const isValidShortUrl = await urlModel.findOne({ shortCode: shortCode }).select('longURL urlClickcount');
+
+        if (!isValidShortUrl) {
+            return res.status(404).send({ status: false, message: "INVALID SHORTURL, Please check the URL and try again." });
+        }
+
+        const redisData = {
+            longURL: isValidShortUrl.longURL,
+            urlClickcount: isValidShortUrl.urlClickcount
+        };
+
+        await redisClient.set(shortCode, JSON.stringify(redisData));
+        return res.render("clicks", { shortCode: shortCode, totalClicks: isValidShortUrl.urlClickcount });
+
+    } catch (error) {
+        return res.status(500).send({ status: false, message: error.message });
     }
-
-    // fetch clickCount from redis database
-    const isexistUrl = await redisClient.get(shortCode)
-    if (isexistUrl) {
-        let parseUrl = JSON.parse(isexistUrl);
-        return res.status(200).send({ status: true, totalClicks: parseUrl.urlClickcount })
-    }
-
-    // If in case redis database doesn't work , fetch clickCount from mongodb database
-    const isAvailable = await urlModel.findOne({ shortCode: shortCode });
-    if (!isAvailable) {
-        return res.status(404).send({ status: false, message: " INVALID SHORTURL,Please check the URL and try again " });
-    }
-
-    return res.status(200).send({ status: true, totalClicks: isAvailable.urlClickcount })
-
 }
-
 
 

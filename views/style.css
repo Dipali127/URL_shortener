@@ -1,0 +1,114 @@
+ * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+ }
+
+ html,
+ body {
+     height: 100%;
+     width: 100%;
+     margin: 0;
+ }
+
+ .container {
+     padding: 20px;
+     background-color: #244c5f;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     text-align: center;
+     height: 100%;
+ }
+
+ h1 {
+     color: white;
+     font-size: 45px;
+     margin-bottom: 35px;
+     margin-top: 20px;
+     word-spacing: 5px;
+ }
+
+ #shortenlongURL {
+     width: 90%;
+     display: flex;
+     gap: 12px;
+     justify-content: center;
+ }
+
+ #longURL {
+     width: 70%;
+     padding: 20px;
+     font-size: 16px;
+     border: 1px solid black;
+     border-radius: 4px;
+     box-sizing: border-box;
+     font-size: 18px;
+ }
+
+ #longURL::placeholder {
+     color: #d3cfcf;
+     font-size: 20px;
+ }
+
+ #button1 {
+     padding: 10px 15px;
+     font-size: 20px;
+     border: none;
+     border-radius: 4px;
+     cursor: pointer;
+     background-color: #007bff;
+     color: #ffffff;
+ }
+
+ #button1:hover {
+     background-color: #0056b3;
+ }
+
+ #shortenedURLContainer {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     background-color: white;
+     width: 40%;
+     padding: 10px;
+     border: 1px solid green;
+     border-radius: 4px;
+     margin-top: 33px;
+ }
+
+ #shortenedURL {
+     font-size: 16px;
+     color: #007bff;
+     text-decoration: none;
+ }
+
+ #shortenedURL:hover {
+     text-decoration: underline;
+ }
+
+ #short {
+     font-size: 18px;
+     /* Increase the size of the colon */
+     margin-left: 4px;
+     /* Add some space between the short URL and the colon */
+ }
+
+ #clickCountForm {
+     margin-top: 20px;
+ }
+
+ #button2 {
+     padding: 10px 15px;
+     margin: 16px;
+     font-size: 20px;
+     border: none;
+     border-radius: 4px;
+     cursor: pointer;
+     background-color: #007bff;
+     color: #ffffff;
+ }
+
+ #button2:hover {
+     background-color: #0056b3;
+ }
