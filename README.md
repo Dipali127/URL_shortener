@@ -73,8 +73,8 @@ urlModel stores information about the URLs, including their long and shortened v
 - **Examples:**
 ````json
 {
-  "longURL": "https://clemensjarnach.github.io/02-articles/2023-05-02-article.html",
-  "shortCode": "5dy815l0lu6vf41w",
+  "longURL": "https://en.wikipedia.org/wiki/Withdrawal_of_Joe_Biden_from_the_2024_United_States_presidential",
+  "shortCode": "FK60DbIk",
   "urlClickcount": 1
 }
 ````
