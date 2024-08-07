@@ -1,13 +1,10 @@
 import { config } from 'dotenv';
 config({ path: '../.env' });
 import * as path from 'path';
-// import { fileURLToPath } from 'url';
-// import { dirname } from 'path';
 import express from 'express';
 const app = express();
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }));
-
 
 import routes from './router/routes.js';
 const port = process.env.PORT || 3001;
