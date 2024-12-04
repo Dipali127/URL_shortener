@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style1.css">
+    <title>Total Clicks</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>URL Shortener</h1>
+        <% if (totalClicks !==undefined) { %>
+            <p></p>
+            <p class="short-url">Short URL <span class="colon">:-</span><a href="http://localhost:3000/<%= shortCode %>"
+                    id="short-link">http://localhost:3000/<%= shortCode %></a>
+            </p>
+            <p class="clicks">Total Clicks <span class="colon">:</span><span class="box">
+                    <%= totalClicks %>
+                </span>
+            </p>
+            <% } %>
+
+                <form id="track-form" action="/trackClicks" method="POST">
+                    <input class="input-field" type="text" name="shortURL" placeholder="Enter Short URL">
+                    <button id="button1" type="submit">Track Clicks</button>
+                </form>
+
+                <form action="/" method="GET">
+                    <button type="submit" id="button2">Shorten another URL</button>
+                </form>
+    </div>
+</body>
+
+</html>

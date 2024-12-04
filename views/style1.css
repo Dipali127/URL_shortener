@@ -1,0 +1,128 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+.container {
+    padding: 20px;
+    background-color: #244c5f;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+}
+
+h1 {
+    color: white;
+    font-size: 45px;
+    margin-bottom: 24px;
+    margin-top: 20px;
+    word-spacing: 5px;
+}
+
+.short-url {
+    border-radius: 5px;
+    background-color: white;
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    color: white;
+    margin: 13px 0;
+    padding: 15px;
+    color: black;
+    gap: 10px;
+    font-size: 18px;
+    margin-left: 4px;
+
+
+}
+
+.colon {
+    margin: -1px;
+    font-size: 18px;
+}
+
+#short-link {
+    color: #007bff;
+    ;
+    text-decoration: none;
+}
+
+#short-link:hover {
+    text-decoration: underline;
+}
+
+.clicks {
+    color: white;
+    font-size: 20px;
+    margin-top: 8px;
+}
+
+.box {
+    display: inline-block;
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-left: 6px;
+}
+
+#track-form {
+    display: flex;
+    margin-top: 6px;
+}
+
+.input-field {
+    padding: 14px;
+    margin: 12px 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: white;
+    font-size: 16px;
+    width: 10cm;
+}
+
+.input-field ::placeholder {
+    color: #d3cfcf;
+    font-size: 20px;
+}
+
+#button1 {
+    padding: 10px 20px;
+    margin: 12px 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+#button1:hover {
+    background-color: #0056b3;
+}
+
+#button2 {
+    padding: 10px 20px;
+    margin: 25px auto;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+#button2:hover {
+    background-color: #0056b3;
+}
